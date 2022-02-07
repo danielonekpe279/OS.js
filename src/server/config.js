@@ -39,6 +39,8 @@ const root = path.resolve(__dirname, '../../');
 
 module.exports = {
   root,
-  port: 8000,
-  public: path.resolve(root, 'dist')
+  public: path.resolve(root, 'dist'),
+
+  // This is the new required entry
+  port: process.env.PORT
 };
