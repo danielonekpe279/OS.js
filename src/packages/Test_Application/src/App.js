@@ -15,7 +15,7 @@ class App extends Component{
   }
 
   async createotp(){
-    let response = await axios.post('/apps/QRCodeViewer/create-otp')
+    let response = await axios.post('/apps/Test_Application/create-otp')
     console.log(response);
     const stats = (response.data.isVerified === 'true');
     const qr_url = response.data.id + '/' + response.data.otp; 
@@ -64,7 +64,7 @@ class QrcodeView extends Component {
     let data = {
       id : this.state.id,
     }
-    let response = await axios.post('/apps/QRCodeViewer/get-items', data);
+    let response = await axios.post('/apps/Test_Application/get-items', data);
     console.log('Response ', response.data);
     const stats = response.data.isVerified;
     console.log('Stats ', stats);
