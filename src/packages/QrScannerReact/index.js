@@ -3,7 +3,7 @@ import osjs from 'osjs';
 import {name as applicationName} from './metadata.json';
 import React from 'react';
 import ReactDom from 'react-dom';
-import Test from './src/App';
+import App from './src/App';
 
 // Our launcher
 const register = (core, args, options, metadata) => {
@@ -19,8 +19,7 @@ const register = (core, args, options, metadata) => {
     position: {left: 700, top: 200}
   })
     .on('destroy', () => proc.destroy())
-    .render($content => 
-      ReactDom.render(React.createElement(Test), $content)
+    .render($content => ReactDom.render(React.createElement(App), $content)
   );
 
   // Creates a new WebSocket connection (see server.js)

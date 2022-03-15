@@ -1,6 +1,7 @@
 module.exports = (core, proc) => {
   const {routeAuthenticated} = core.make('osjs/express');
-
+  var request = require("request");
+  var otpGenerator = require('otp-generator');
   return {
     // When server initializes
     async init() {
@@ -9,6 +10,45 @@ module.exports = (core, proc) => {
         res.json({hello: 'World'});
       });
 
+      routeAuthenticated('POST', proc.resource('/get-items'), (req,res) => {
+        const object_id = req.body.id;
+        const object_url = 'https://otpcodes-c9c5.restdb.io/rest/otp-storage' + '/' +  object_id; 
+        var settings = {
+          url: object_url,
+          method: 'GET',
+          headers: 
+          { 'cache-control': 'no-cache',
+             'x-apikey': '3e5724b90b195fc57d6e933b509e1bc22bc40',
+             'content-type': 'application/json' 
+          },
+          json: true
+        };
+
+        request(settings, function(error, response, body){
+          if(error) throw new Error(error);
+          res.json({id: body._id, otp: body.OTP, isVerified: body.Verified});
+        });
+      });
+
+      routeAuthenticated('POST', proc.resource('/create-otp'), (req, res) => {
+        var otp_value = otpGenerator.generate(12, {alphabets:false, upperCase: false, specialChars: false});
+        var options = { method: 'POST',
+          url: 'https://otpcodes-c9c5.restdb.io/rest/otp-storage',
+          headers: 
+           { 'cache-control': 'no-cache',
+             'x-apikey': '3e5724b90b195fc57d6e933b509e1bc22bc40',
+             'content-type': 'application/json' },
+             body: { 
+              OTP: otp_value, 
+              Verified: false 
+            },
+          json: true };
+        
+        request(options, function (error, response, body) {
+          if (error) throw new Error(error);
+          res.json({id: body._id, otp: body.OTP, isVerified: body.Verified});
+        });
+      });
       // WebSocket Route example (see index.js)
       // NOTE: This creates a new connection. You can use a core bound socket instead
       core.app.ws(proc.resource('/socket'), (ws, req) => {
