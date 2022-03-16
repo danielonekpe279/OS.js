@@ -38675,8 +38675,6 @@ var App = /*#__PURE__*/function (_Component) {
     _this = _super.call(this, props);
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this), "handleError", function (err) {
-      console.log(err);
-
       _this.setState({
         appState: 'Error'
       });
@@ -38696,12 +38694,15 @@ var App = /*#__PURE__*/function (_Component) {
             currentOTP: otp
           });
         } else {
-          _this.handleError();
+          _this.setState({
+            appSTATE: 'Error'
+          });
         }
       }
     });
 
     _this.check = _this.check.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this));
+    _this.handleClick = _this.handleClick.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this));
     _this.handleError = _this.handleError.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this));
     _this.handleScan = _this.handleScan.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this));
     _this.handleVenueChange = _this.handleVenueChange.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this));
@@ -38712,7 +38713,7 @@ var App = /*#__PURE__*/function (_Component) {
       appSTATE: 'Verification',
       currentID: null,
       currentOTP: null,
-      venue: 'eolaslab1',
+      venue: '',
       module: ''
     };
     return _this;
@@ -38740,6 +38741,13 @@ var App = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "handleClick",
+    value: function handleClick() {
+      this.setState({
+        appSTATE: 'Verification'
+      });
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       var _this2 = this;
@@ -38751,7 +38759,7 @@ var App = /*#__PURE__*/function (_Component) {
         otp: this.state.currentOTP,
         id: this.state.currentID
       };
-      axios__WEBPACK_IMPORTED_MODULE_9___default.a.put('/apps/QrScannerReact/update-otp', data).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_9___default.a.put('/apps/QrCodeScanner/update-otp', data).then(function (response) {
         console.log(response);
 
         _this2.setState({
@@ -38766,8 +38774,6 @@ var App = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
-
       var appState = this.state.appSTATE;
       var view;
 
@@ -38777,42 +38783,30 @@ var App = /*#__PURE__*/function (_Component) {
           onError: this.handleError,
           onScan: this.handleScan,
           style: {
-            width: '100%'
+            width: '90%'
           }
         });
       } else if (appState === "Result") {
         view = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("form", {
           onSubmit: this.handleSubmit
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("label", null, "What room are you in?", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("select", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("label", null, "What room are you in?", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("input", {
+          type: "text",
           value: this.state.venue,
           onChange: this.handleVenueChange
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("option", {
-          value: "eolaslab1"
-        }, "Eolas Lab 1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("option", {
-          value: "eolaslab2"
-        }, "Eolas Lab 2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("option", {
-          value: "callanlab1"
-        }, "Callan Lab 1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("option", {
-          value: "callanlab2"
-        }, "Callan Lab 2"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("label", null, "What module is going on in this room?", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("input", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("label", null, "What module is going on in this room?", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("input", {
           type: "text",
           value: this.state.module,
           onChange: this.handleModuleChange
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("input", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("input", {
           type: "submit",
           value: "Verify now!!"
-        }));
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("br", null));
       } else {
-        view = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("h1", null, "An error occured during scanning"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("button", {
-          onClick: function onClick() {
-            _this3.setState({
-              appState: 'Verification'
-            });
-          }
+        view = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("h2", null, "An error occured during scanning"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("p", null, "Most likely cause of errors"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("li", null, "Scanning the wrong QR code"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("li", null, "The QR code value has been changed from what was generated"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("li", null, "Network error")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("button", {
+          onClick: this.handleClick
         }, "Keep Scanning"));
       }
 
-      console.log(view);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("div", null, view);
     }
   }]);
