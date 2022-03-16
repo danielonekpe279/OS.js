@@ -38759,7 +38759,7 @@ var App = /*#__PURE__*/function (_Component) {
         otp: this.state.currentOTP,
         id: this.state.currentID
       };
-      axios__WEBPACK_IMPORTED_MODULE_9___default.a.put('/apps/QrCodeScanner/update-otp', data).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_9___default.a.put('/apps/QrScannerReact/update-otp', data).then(function (response) {
         console.log(response);
 
         _this2.setState({

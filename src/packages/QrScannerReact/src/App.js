@@ -75,7 +75,7 @@ export default class App extends Component {
             id : this.state.currentID,
         };
 
-        axios.put('/apps/QrCodeScanner/update-otp', data)
+        axios.put('/apps/QrScannerReact/update-otp', data)
         .then(response => {
             console.log(response);
             this.setState({appSTATE : 'Verification'});
