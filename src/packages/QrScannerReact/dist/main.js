@@ -38783,7 +38783,7 @@ var App = /*#__PURE__*/function (_Component) {
           onError: this.handleError,
           onScan: this.handleScan,
           style: {
-            width: '90%'
+            width: '100%'
           }
         });
       } else if (appState === "Result") {

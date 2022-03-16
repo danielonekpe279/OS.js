@@ -95,7 +95,7 @@ export default class App extends Component {
             delay={0}
             onError={this.handleError}
             onScan={this.handleScan}
-            style={{ width: '90%' }}
+            style={{ width: '100%' }}
             />
         }
 
